@@ -9,25 +9,26 @@ if(isset($_POST["ajout"]))
 			if(!isset($_COOKIE["panier"]))
 			{
 				echo "creation";
-				setcookie("panier", $_POST["ajout"], time() + (86400 * 30), "/");
+				setcookie("panier", $_POST["ajout"], time() + 3600, "/");
 			}
 			else
 			{
 				echo "ajout";
-				setcookie("panier", $_COOKIE["panier"].$_POST["ajout"]."|", time() + (86400 * 30), "/");
+				setcookie("panier", $_COOKIE["panier"]."|".$_POST["ajout"], time() + 3600, "/");
 			}
 		}
-		$_POST["ajout"]=NULL;
+		header('Location: panier.php');
+		exit();
 }
 
 if(isset($_COOKIE["panier"]))
 {
 	 	include 'connectdb.php' ;
-
+		echo $_COOKIE["panier"]."\n\n";
 	 	$panier = $_COOKIE["panier"];
-		echo $panier."\n";
+		echo $panier."\n\n";
 		$tab = explode("|",$panier);
-		echo count($tab);
+		echo count($tab)."\n\n";
 
 		$sql = "SELECT titre, prix, version, urlimage FROM article WHERE ";
 		for($i=0 ; $i < count($tab); $i++)
