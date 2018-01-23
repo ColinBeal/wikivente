@@ -10,7 +10,7 @@ echo "<div id='centre'>";
 	echo "</div>";
 
 	echo "<div id='contenu'>";
-		include ("affiche_article.php");
+		include ("liste_annonce.php");
 	echo "</div>";
 echo "</div>";
 
