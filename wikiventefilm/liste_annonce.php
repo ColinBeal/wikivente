@@ -1,6 +1,6 @@
 <?php
 
-	 include 'connectdb.php' ;
+	 	include 'connectdb.php' ;
 
 		$sql = "SELECT titre, prix, version, urlimage, id FROM article";
 
@@ -9,16 +9,12 @@
 		mysqli_close($conn);
 
 
-?>
-
-		<?php
-
         if (mysqli_num_rows($result) > 0)
         {
           while($row = mysqli_fetch_assoc($result))
           {
             echo "
-						<a href=pagearticle.php?id=".$row["id"].">
+						<a href=affiche_article.php?id=".$row["id"].">
             <div class='article'>
               <div class='illustr'>
                 <img src='".$row["urlimage"]."' alt='illustr' width='70px' height'70px'/>
@@ -37,4 +33,4 @@
         {
             echo "aucun resultats";
         }
-     ?>
+?>
