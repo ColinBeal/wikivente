@@ -9,23 +9,6 @@ include $page.".php";
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /*
 if ($page=='liste_items' || $page=='liste_utilisateur'
 || $page=='liste_composant'
