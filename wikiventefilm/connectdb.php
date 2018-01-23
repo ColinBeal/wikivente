@@ -2,9 +2,9 @@
 	session_start();
   $servername = "localhost";
   $username = "root";
-  $password = "root";
+  $password = "";
   $dbname = "wikiventefilm";
-	
+
 
   		$conn = mysqli_connect($servername, $username, $password, $dbname);
 
