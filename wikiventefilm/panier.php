@@ -1,49 +1,7 @@
 <?php
 session_start();
-
-
-if(isset($_POST["ajout"]))
-{
-		if($_POST["ajout"]!=NULL)
-		{
-			if(!isset($_COOKIE["panier"]))
-			{
-				echo "creation";
-				setcookie("panier", $_POST["ajout"], time() + 3600, "/");
-			}
-			else
-			{
-				echo "ajout";
-				setcookie("panier", $_COOKIE["panier"]."|".$_POST["ajout"], time() + 3600, "/");
-			}
-		}
-		header('Location: panier.php');
-		exit();
-}
-
-if(isset($_COOKIE["panier"]))
-{
-	 	include 'connectdb.php' ;
-		echo $_COOKIE["panier"]."\n\n";
-	 	$panier = $_COOKIE["panier"];
-		echo $panier."\n\n";
-		$tab = explode("|",$panier);
-		echo count($tab)."\n\n";
-
-		$sql = "SELECT titre, prix, version, urlimage FROM article WHERE ";
-		for($i=0 ; $i < count($tab); $i++)
-		{
-			$sql .= "id=".$tab[$i];
-			if($i != (count($tab)-1))
-					$sql .= " OR ";
-		}
-		echo $sql;
-		$result = mysqli_query($conn, $sql);
-
-		mysqli_close($conn);
-}
-
 ?>
+
 <!DOCTYPE html>
 <html>
 	<head>
@@ -53,7 +11,53 @@ if(isset($_COOKIE["panier"]))
 	<body>
 		<h1>Votre Panier</h1>
     <div class="corps">
-		<?php
+
+<?php
+
+if(isset($_GET["reset"]))
+{
+	setcookie("panier", NULL, 1, "/");
+	header('Location: panier.php');
+	exit;
+}
+
+if(isset($_POST["ajout"]))
+{
+		if($_POST["ajout"]!=NULL)
+		{
+			if(!isset($_COOKIE["panier"]))
+			{
+				setcookie("panier", $_POST["ajout"], time() + 3600, "/");
+			}
+			else
+			{
+				setcookie("panier", $_COOKIE["panier"]."|".$_POST["ajout"], time() + 3600, "/");
+			}
+		}
+		header('Location: panier.php');
+		exit;
+}
+
+if(isset($_COOKIE["panier"]) && strlen($_COOKIE["panier"]>0))
+{
+	 	include 'connectdb.php' ;
+
+	 	$panier = $_COOKIE["panier"];
+
+		$tab = explode("|",$panier);
+
+		$sql = "SELECT titre, prix, version, urlimage FROM article WHERE ";
+		for($i=0 ; $i < count($tab); $i++)
+		{
+			$sql .= "id=".$tab[$i];
+			if($i != (count($tab)-1))
+					$sql .= " OR ";
+		}
+
+		$result = mysqli_query($conn, $sql);
+
+		mysqli_close($conn);
+
 
         if (mysqli_num_rows($result) > 0)
         {
@@ -77,7 +81,15 @@ if(isset($_COOKIE["panier"]))
         {
             echo "aucun resultats";
         }
+}
+else {
+	echo "panier vide";
+}
      ?>
+
+		 <form action='panier.php?reset=true' method='post'>
+			 <input type='submit' value='Reset panier'/>
+		 </form>
    </div>
 	</body>
 </html>
