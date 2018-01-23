@@ -1,6 +1,5 @@
 <?php
-
-	 	include 'connectdb.php' ;
+	 	include 'connectdb.php';
 
 		$sql = "SELECT titre, prix, version, urlimage, id FROM article";
 
