@@ -4,9 +4,7 @@
   $username = "root";
   $password = "root";
   $dbname = "wikiventefilm";
-  
-
-
+	
 
   		$conn = mysqli_connect($servername, $username, $password, $dbname);
 
