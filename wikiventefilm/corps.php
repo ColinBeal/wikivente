@@ -1,4 +1,3 @@
-
 <?php
 echo "<div id='banniere'>";
 	include ("banniere.php");
