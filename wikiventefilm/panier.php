@@ -1,12 +1,50 @@
 <?php
-$panier="1|3";
+session_start();
+?>
 
-if(isset($panier))
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+        <title>Panier</title>
+        <link rel="stylesheet" type="text/css" href="style.css">
+	<body>
+		<h1>Votre Panier</h1>
+    <div class="corps">
+
+<?php
+
+if(isset($_GET["reset"]))
 {
-	 include 'connectdb.php' ;
+	setcookie("panier", NULL, 1, "/");
+	header('Location: panier.php');
+	exit;
+}
+
+if(isset($_POST["ajout"]))
+{
+		if($_POST["ajout"]!=NULL)
+		{
+			if(!isset($_COOKIE["panier"]))
+			{
+				setcookie("panier", $_POST["ajout"], time() + 3600, "/");
+			}
+			else
+			{
+				setcookie("panier", $_COOKIE["panier"]."|".$_POST["ajout"], time() + 3600, "/");
+			}
+		}
+		header('Location: panier.php');
+		exit;
+}
+
+if(isset($_COOKIE["panier"]) && strlen($_COOKIE["panier"]>0))
+{
+	 	include 'connectdb.php' ;
+
+	 	$panier = $_COOKIE["panier"];
 
 		$tab = explode("|",$panier);
-
 
 		$sql = "SELECT titre, prix, version, urlimage FROM article WHERE ";
 		for($i=0 ; $i < count($tab); $i++)
@@ -19,19 +57,7 @@ if(isset($panier))
 		$result = mysqli_query($conn, $sql);
 
 		mysqli_close($conn);
-}
 
-?>
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="UTF-8">
-        <title>Panier</title>
-        <link rel="stylesheet" type="text/css" href="style.css">
-	<body>
-		<h1>Votre Panier</h1>
-    <div class="corps">
-		<?php
 
         if (mysqli_num_rows($result) > 0)
         {
@@ -55,7 +81,15 @@ if(isset($panier))
         {
             echo "aucun resultats";
         }
+}
+else {
+	echo "panier vide";
+}
      ?>
+
+		 <form action='panier.php?reset=true' method='post'>
+			 <input type='submit' value='Reset panier'/>
+		 </form>
    </div>
 	</body>
 </html>
