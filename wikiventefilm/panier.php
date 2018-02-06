@@ -28,6 +28,7 @@ if(isset($panier))
 		<meta charset="UTF-8">
         <title>Panier</title>
         <link rel="stylesheet" type="text/css" href="style.css">
+		</head>		
 	<body>
 		<h1>Votre Panier</h1>
     <div class="corps">
