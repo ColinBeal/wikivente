@@ -19,23 +19,30 @@ else
 
 ?>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr">
-	<head>
-		<meta http-equiv="X-UA-Compatible" content="IE=8" />
-		<link rel="stylesheet" media="screen" type="text/css" title="design" href="style.css" />
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<script type="text/javascript" src="jquery-2.2.1.min.js"></script>
-	</head>
+<?php
+include("head.html");
+ ?>
 	<body>
 		<?php
+		echo "<div id='banniere'>";
+			include ("banniere.php");
+		echo "</div>";
+
+		echo "<div id='centre'>";
+			echo "<div id='menu'>";
+				include ("menu.php");
+			echo "</div>";
+			echo "</div>";
+
 		        if (mysqli_num_rows($result) > 0)
 		        {
 								$row = mysqli_fetch_assoc($result);
 		            echo "
-			            <div class='article'>
-			              <div class='illustr'>
+			            <div class='article row'>
+			              <div class='illustr col-md-4'>
 			                <img src='".$row["urlimage"]."' alt='illustr' width='70px' height'70px'/>
 			              </div>
-			              <div class='caract'>
+			              <div class='caract col-md-8'>
 			                <p>Titre : ".$row["titre"]."</p>
 			                <p> Version : ".$row["version"]."</p>
 			                <p> Prix : ".$row["prix"]." €</p>
