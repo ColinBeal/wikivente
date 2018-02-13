@@ -1,11 +1,11 @@
 #banniere {
-background-color:red;
+background-color:#eeeeee;
 height:100px;
-width:66%;
+width:100%;
 margin:auto;
 }
 #centre {
-width:66%;
+width:100%;
 margin:auto;
 }
 #menu  {
@@ -16,7 +16,7 @@ height:200px;
 }
 #contenu {
 margin-left:20%;
-background-color:#55eeee;
+background-color:white;
 width:80%;
 height:500px;
 }
@@ -56,8 +56,4 @@ td{
 .illustr {
   width : 70px;
   height : 70px;
-}
-.caract{
-	position: absolute;
-	right: 2%;
 }

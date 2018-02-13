@@ -14,11 +14,11 @@
           {
             echo "
 						<a href=affiche_article.php?id=".$row["id"].">
-            <div class='article'>
-              <div class='illustr'>
+            <div class='article row'>
+              <div class='illustr col-md-4'>
                 <img src='".$row["urlimage"]."' alt='illustr' width='70px' height'70px'/>
               </div>
-              <div class='caract'>
+              <div class='caract col-md-8'>
                 <p>Titre : ".$row["titre"]."</p>
                 <p> Version : ".$row["version"]."</p>
                 <p> Prix : ".$row["prix"]." €</p>

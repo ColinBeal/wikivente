@@ -26,45 +26,31 @@ else
 		<script type="text/javascript" src="jquery-2.2.1.min.js"></script>
 	</head>
 	<body>
-
 		<?php
-			echo "<div id='banniere'>";
-				include ("banniere.php");
-			echo "</div>";
-
-			echo "<div id='centre'>";
-				echo "<div id='menu'>";
-					include ("menu.php");
-				echo "</div>";
-
-				echo "<div id='contenu'>";
-
-		    if (mysqli_num_rows($result) > 0)
-		    {
-					$row = mysqli_fetch_assoc($result);
-		      	echo "
-			      	<div class='article'>
-			          <div class='illustr'>
-			            <img src='".$row["urlimage"]."' alt='illustr' width='70px' height'70px'/>
-			          </div>
-			          <div class='caract'>
-			          	<p>Titre : ".$row["titre"]."</p>
-			            <p> Version : ".$row["version"]."</p>
-			            <p> Prix : ".$row["prix"]." €</p>
-			          </div>
-								<form action='panier.php' method='post'>
-									<input type='hidden' name='ajout' value='".$row["id"]."'/>
-									<input type='submit' value='Ajouter au panier'/>
-								</form>
-			        </div>
-		        ";
-		    }
-		    else
-		    {
-		      echo "aucun resultats pour cet article... :/";
-		    }
-				echo "</div>";
-			echo "</div>";
-		?>
+		        if (mysqli_num_rows($result) > 0)
+		        {
+								$row = mysqli_fetch_assoc($result);
+		            echo "
+			            <div class='article'>
+			              <div class='illustr'>
+			                <img src='".$row["urlimage"]."' alt='illustr' width='70px' height'70px'/>
+			              </div>
+			              <div class='caract'>
+			                <p>Titre : ".$row["titre"]."</p>
+			                <p> Version : ".$row["version"]."</p>
+			                <p> Prix : ".$row["prix"]." €</p>
+			              </div>
+										<form action='panier.php' method='post'>
+											<input type='hidden' name='ajout' value='".$row["id"]."'/>
+											<input type='submit' value='Ajouter au panier'/>
+										</form>
+			            </div>
+		            ";
+		        }
+		        else
+		        {
+		            echo "aucun resultats pour cet article... :/";
+		        }
+		     ?>
 	</body>
 </html>
