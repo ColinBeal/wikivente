@@ -3,7 +3,12 @@
 	 include 'connectdb.php' ;
 
 		$sql = "SELECT nom, lien, id FROM meta_menu";
+
 		$result = mysqli_query($conn, $sql);
+
+		mysqli_close($conn);
+
+
 ?>
 
 		<?php
