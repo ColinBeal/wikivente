@@ -100,6 +100,10 @@ include("head.html");
 						$sql .= "support='" .$_GET["support"]."'";
 						$flag++;
 					}
+					if ($flag == 0)
+					{
+						$sql = "SELECT titre, prix, version, urlimage,id  FROM article";
+					}
 
 					$result3 = mysqli_query($conn, $sql);
 					if (mysqli_num_rows($result3) > 0)
