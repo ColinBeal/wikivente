@@ -4,18 +4,18 @@
 
 		$sql = "SELECT nom, lien, id FROM meta_menu";
 
-		$resultat = mysqli_query($conn, $sql);
+		$result = mysqli_query($conn, $sql);
 
-
+		mysqli_close($conn);
 
 
 ?>
 
 		<?php
     echo "<ul>";
-        if (mysqli_num_rows($resultat) > 0)
+        if (mysqli_num_rows($result) > 0)
         {
-          while($row = mysqli_fetch_assoc($resultat))
+          while($row = mysqli_fetch_assoc($result))
           {
             echo "
 	            <li>
