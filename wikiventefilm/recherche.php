@@ -8,16 +8,24 @@
 
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="UTF-8">
-        <title>Panier</title>
-        <link rel="stylesheet" type="text/css" href="style.css">
-	</head>
+<?php
+include("head.html");
+ ?>
 	<body>
 				<?php
+				echo "<div class='row' id='banniere'>";
+					include ("banniere.php");
+				echo "</div>";
+
+				echo "<div class='row' id='centre'>";
+					echo "<div class='col-md-4' id='menu'>";
+						include ("menu.php");
+					echo "</div>";
+
+								echo "<div class='col-md-8' id='contenu' >";
 				if (mysqli_num_rows($result) > 0)
 				{
-					echo "<form action='#' method='get'>";
+					echo "<form class='recherche' action='#' method='get'>";
 					while($row = mysqli_fetch_assoc($result))
 					{
 						switch ($row["type"])
@@ -38,7 +46,7 @@
 									{
 										while($row2 = mysqli_fetch_assoc($result2))
 										{
-											echo $row2["nom"] . "<select name='".$row2["nom"]."'>";
+											echo $row2["nom"] . "<select class='custom-select' name='".$row2["nom"]."'>";
 											$option = explode("#", $row2["options"]);
 											for($i=0 ; $i < sizeof($option); $i++)
 											{
@@ -51,8 +59,11 @@
 							}
 						}
 					}
+
+
 					echo "<input type='submit' name='submit'/>";
 					echo "</form>";
+
 				}
 
 				if(isset($_GET["submit"]))
@@ -120,6 +131,7 @@
 					else
 						echo "aucun résultats";
 				}
+				echo "</div>";
 				mysqli_close($conn);
 				?>
 			</form>
