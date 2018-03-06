@@ -135,7 +135,6 @@ include("head.html");
 						echo "aucun résultats";
 				}
 				echo "</div>";
-				
 				?>
 			</form>
 		</body>

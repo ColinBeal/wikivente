@@ -8,10 +8,12 @@ session_start();
 	include("head.html");
 	 ?>
 	<body>
+
 		<?php
 		include "connectdb.php";
 		include "all.php";
 		 ?>
+
     <div class="corps">
 
 <?php
