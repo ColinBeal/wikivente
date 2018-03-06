@@ -4,31 +4,15 @@ session_start();
 
 <!DOCTYPE html>
 <html>
-	<?php
-	include("head.html");
-	 ?>
+	<head>
+		<meta charset="UTF-8">
+        <title>Panier</title>
+        <link rel="stylesheet" type="text/css" href="style.css">
 	<body>
-
-		<?php
-		include "connectdb.php";
-		include "all.php";
-		 ?>
-
+		<h1>Votre Panier</h1>
     <div class="corps">
 
 <?php
-echo "<div class='row' id='banniere'>";
-	include ("banniere.php");
-echo "</div>";
-
-echo "<div class='row' id='centre'>";
-	echo "<div class='col-md-4' id='menu'>";
-		include ("menu.php");
-	echo "</div>";
-
-	echo "<div class='col-md-8' id='contenu' >";
-
-
 
 if(isset($_GET["reset"]))
 {
@@ -62,7 +46,7 @@ if(isset($_COOKIE["panier"]) && strlen($_COOKIE["panier"]>0))
 
 		$tab = explode("|",$panier);
 
-		$sql = "SELECT titre, prix, version, urlimage, id FROM article WHERE ";
+		$sql = "SELECT titre, prix, version, urlimage FROM article WHERE ";
 		for($i=0 ; $i < count($tab); $i++)
 		{
 			$sql .= "id=".$tab[$i];
@@ -80,20 +64,16 @@ if(isset($_COOKIE["panier"]) && strlen($_COOKIE["panier"]>0))
           while($row = mysqli_fetch_assoc($result))
           {
 						echo "
-						<div class='article row'>
-							<div class='illustr col-md-4'>
-								<img src='".$row["urlimage"]."' alt='illustr' width='70px' height'70px'/>
-							</div>
-							<div class='caract col-md-8'>
-								<p>Titre : ".$row["titre"]."</p>
-								<p> Version : ".$row["version"]."</p>
-								<p> Prix : ".$row["prix"]." €</p>
-							</div>
-							<form action='panier.php' method='post'>
-								<input type='hidden' name='ajout' value='".$row["id"]."'/>
-								<input type='submit' value='Ajouter au panier'/>
-							</form>
-						</div>
+            <div class='article'>
+              <div class='illustr'>
+                <img src='".$row["urlimage"]."' alt='illustr' width='100px' height'100px'/>
+              </div>
+              <div class='caract'>
+                <p>Titre : ".$row["titre"]."</p>
+                <p> Version : ".$row["version"]."</p>
+                <p> Prix : ".$row["prix"]." €</p>
+              </div>
+            </div>
             ";
           }
         }
@@ -105,13 +85,11 @@ if(isset($_COOKIE["panier"]) && strlen($_COOKIE["panier"]>0))
 else {
 	echo "panier vide";
 }
-echo"<form action='panier.php?reset=true' method='post'>";
-	echo"<input class='btn btn-warning' type='submit' value='Reset panier'/>";
-echo"</form>";
-echo "</div>";
      ?>
 
-
+		 <form action='panier.php?reset=true' method='post'>
+			 <input type='submit' value='Reset panier'/>
+		 </form>
    </div>
 	</body>
 </html>

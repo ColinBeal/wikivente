@@ -8,27 +8,16 @@
 
 <!DOCTYPE html>
 <html>
-<?php
-include("head.html");
- ?>
+	<head>
+		<meta charset="UTF-8">
+        <title>Panier</title>
+        <link rel="stylesheet" type="text/css" href="style.css">
+	</head>
 	<body>
-		<?php
-			include "all.php";
-		 ?>
 				<?php
-				echo "<div class='row' id='banniere'>";
-					include ("banniere.php");
-				echo "</div>";
-
-				echo "<div class='row' id='centre'>";
-					echo "<div class='col-md-4' id='menu'>";
-						include ("menu.php");
-					echo "</div>";
-
-								echo "<div class='col-md-8' id='contenu' >";
 				if (mysqli_num_rows($result) > 0)
 				{
-					echo "<form class='recherche' action='#' method='get'>";
+					echo "<form action='#' method='get'>";
 					while($row = mysqli_fetch_assoc($result))
 					{
 						switch ($row["type"])
@@ -49,7 +38,7 @@ include("head.html");
 									{
 										while($row2 = mysqli_fetch_assoc($result2))
 										{
-											echo $row2["nom"] . "<select class='custom-select' name='".$row2["nom"]."'>";
+											echo $row2["nom"] . "<select name='".$row2["nom"]."'>";
 											$option = explode("#", $row2["options"]);
 											for($i=0 ; $i < sizeof($option); $i++)
 											{
@@ -62,11 +51,8 @@ include("head.html");
 							}
 						}
 					}
-
-
 					echo "<input type='submit' name='submit'/>";
 					echo "</form>";
-
 				}
 
 				if(isset($_GET["submit"]))
@@ -88,13 +74,13 @@ include("head.html");
 					if ($_GET["min"]!=null)
 					{
 						if ($flag!=0) { $sql .= " AND "; }
-						$sql .= "prix >= " .$_GET["min"];
+						$sql .= "prix > " .$_GET["min"];
 						$flag++;
 					}
 					if ($_GET["max"]!=null)
 					{
 						if ($flag!=0) { $sql .= " AND "; }
-						$sql .= "prix <= " .$_GET["max"];
+						$sql .= "prix < " .$_GET["max"];
 						$flag++;
 					}
 					if ($_GET["support"]!=null AND $_GET["support"]!="Selectionnez")
@@ -134,7 +120,7 @@ include("head.html");
 					else
 						echo "aucun résultats";
 				}
-				echo "</div>";
+				mysqli_close($conn);
 				?>
 			</form>
 		</body>
