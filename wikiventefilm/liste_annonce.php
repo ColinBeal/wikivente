@@ -1,10 +1,10 @@
 <?php
 
-include("head.html");
+		include("head.html");
 
 	 	include 'connectdb.php';
 
-		$sql = "SELECT titre, prix, version, urlimage, id FROM article";
+		$sql = "SELECT titre, prix, version, urlimage, id FROM article WHERE etat = 'accepted' ";
 
 		$result = mysqli_query($conn, $sql);
 
