@@ -62,8 +62,6 @@ include("head.html");
 							}
 						}
 					}
-
-
 					echo "<input type='submit' name='submit'/>";
 					echo "</form>";
 
@@ -72,7 +70,7 @@ include("head.html");
 				if(isset($_GET["submit"]))
 				{
 					$flag=0;
-					$sql = "SELECT titre, prix, version, urlimage,id  FROM article WHERE ";
+					$sql = "SELECT titre, prix, version, urlimage, categorie, id  FROM article WHERE ";
 
 					if ($_GET["titre"]!=null)
 					{
@@ -103,6 +101,12 @@ include("head.html");
 						$sql .= "support='" .$_GET["support"]."'";
 						$flag++;
 					}
+					if ($_GET["categorie"]!=null AND $_GET["categorie"]!="Selectionnez")
+					{
+						if ($flag!=0) { $sql .= " AND "; }
+						$sql .= "categorie='" .$_GET["categorie"]."'";
+						$flag++;
+					}
 					if ($flag == 0)
 					{
 						$sql = "SELECT titre, prix, version, urlimage,id  FROM article";
@@ -121,6 +125,7 @@ include("head.html");
 				          <div class='caract'>
 				          	<p>Titre : ".$row3["titre"]."</p>
 				            <p> Version : ".$row3["version"]."</p>
+										<p> Categorie : ".$row3["categorie"]."</p>
 				            <p> Prix : ".$row3["prix"]." €</p>
 				          </div>
 									<form action='panier.php' method='post'>
