@@ -10,7 +10,7 @@ echo "<div class='row' id='centre'>";
 	echo "</div>";
 
 	echo "<div class='col-md-8' id='contenu' >";
-		include "liste_annonce.php";
+		//include "liste_annonce.php";
 	echo "</div>";
 
 echo "</div>";

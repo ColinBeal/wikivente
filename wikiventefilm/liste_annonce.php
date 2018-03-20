@@ -1,23 +1,42 @@
 <?php
+	session_start();
+	$_SESSION["panier"]=NULL;
+	include "connectdb.php";
 
-		include("head.html");
+	$sql = "SELECT titre, prix, version, urlimage, id FROM article WHERE etat = 'accepted' ";
+	$result = mysqli_query($conn, $sql);
+?>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr">
+	<?php
+		include "head.html";
+	?>
+	<body>
+		<?php
+			include "all.php";
 
-	 	include 'connectdb.php';
+		?>
 
-		$sql = "SELECT titre, prix, version, urlimage, id FROM article WHERE etat = 'accepted' ";
+		<?php
 
-		$result = mysqli_query($conn, $sql);
+			echo "<div class='row' id='banniere'>";
+				include "banniere.php";
+			echo "</div>";
 
-		mysqli_close($conn);
+			echo "<div class='row' id='centre'>";
 
+			echo "<div class='col-md-4' id='menu'>";
+				include "menu.php";
+			echo "</div>";
 
+			echo "<div class='col-md-8' id='contenu' >";
 
-        if (mysqli_num_rows($result) > 0)
-        {
-          while($row = mysqli_fetch_assoc($result))
-          {
-            echo "
-						<div class='article row'>
+		  if (mysqli_num_rows($result) > 0)
+		  {
+		    while($row = mysqli_fetch_assoc($result))
+		    {
+		      echo "
+					<div class='article row'>
+						<a href='affiche_article.php?id=".$row["id"]."'>
 							<div class='illustr col-md-4'>
 								<img src='".$row["urlimage"]."' alt='illustr' width='70px' height'70px'/>
 							</div>
@@ -30,12 +49,18 @@
 								<input type='hidden' name='ajout' value='".$row["id"]."'/>
 								<input type='submit' value='Ajouter au panier'/>
 							</form>
-						</div>
-            ";
-          }
-        }
-        else
-        {
-            echo "aucun resultats";
-        }
-?>
+						</a>
+					</div>
+		      ";
+		    }
+		  }
+		  else
+		  {
+		      echo "aucun resultats";
+		  }
+			echo "</div>";
+		?>
+		<script src="js/jquery.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+	</body>
+</html>
