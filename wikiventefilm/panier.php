@@ -36,6 +36,45 @@ session_start();
 					exit;
 				}
 
+				if(isset($_POST["supprime"]))
+				{
+						if($_POST["supprime"]!=NULL)
+						{
+							if(isset($_COOKIE["panier"]))
+							{
+								$c=0;
+								$panier = $_COOKIE["panier"];
+
+								unset($_COOKIE['panier']);
+								setcookie("panier", NULL, -1, "/");
+
+								$tab = explode("|",$panier);
+
+								for ($i=0; $i < count($tab) ; $i++)
+								{
+									if ($tab[$i] != $_POST["supprime"])
+									{
+										if ($c==0)
+										{
+											echo "creation cookie".$tab[$i]."<br/>";
+											setcookie("panier2", $tab[$i], time() + 3600, "/");
+											setcookie("panier", $tab[$i], time() + 3600, "/");
+											$c++;
+										}
+										else
+										{
+											echo "ajoue variable".$tab[$i]."<br/>";
+											setcookie("panier", $_COOKIE["panier"]."|".$tab[$i], time() + 3600, "/");
+										}
+									}
+								}
+							}
+						}
+						//header('Location: panier.php');
+						exit;
+				}
+
+
 				if(isset($_POST["ajout"]))
 				{
 						if($_POST["ajout"]!=NULL)
@@ -89,8 +128,8 @@ session_start();
 												<p> Prix : ".$row["prix"]." €</p>
 											</div>
 											<form action='panier.php' method='post'>
-												<input type='hidden' name='ajout' value='".$row["id"]."'/>
-												<input type='submit' value='Ajouter au panier'/>
+												<input type='hidden' name='supprime' value='".$row["id"]."'/>
+												<input type='submit' value='Supprimer du panier'/>
 											</form>
 										</div>
 				            ";

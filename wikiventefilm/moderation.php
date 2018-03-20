@@ -1,13 +1,11 @@
 <?php
 session_start();
 
-
 if (isset($_SESSION["login"]))
 {
   include "connectdb.php";
-  $sql2 = "SELECT * FROM utilisateurs WHERE login='".$_SESSION['login']."' AND type='moderateur'";
-  $resultat2 = mysqli_query($conn, $sql2);
-  if (mysqli_num_rows($resultat2)==null)
+
+  if ($_SESSION["type"] != "moderateur")
   {
     header('Location: index.php');
     exit;

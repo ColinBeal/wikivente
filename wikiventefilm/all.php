@@ -11,7 +11,7 @@
   {
     if (isset($_POST["login"]) && isset($_POST["password"]))
     {
-      
+
       if ($_POST["submit"]=="enregistrement")
       {
         $sql = "INSERT INTO utilisateurs (login, pass) VALUES ('" .$_POST["login"]. "','" .$_POST["password"]. "')";
@@ -19,6 +19,7 @@
         {
           $_SESSION["login"] = $_POST["login"];
           $_SESSION["password"] = $_POST["password"];
+          $_SESSION["type"] = "client";
           header('Location: ?');
           exit;
         }
@@ -31,12 +32,14 @@
 
       if($_POST["submit"]=="connexion")
       {
-        $sql = "SELECT id FROM utilisateurs WHERE login='".$_POST["login"]."' AND pass='".$_POST["password"]."'";
+        $sql = "SELECT id, type FROM utilisateurs WHERE login='".$_POST["login"]."' AND pass='".$_POST["password"]."'";
         $result2 = mysqli_query($conn, $sql);
         if(mysqli_num_rows($result2)>0)
         {
+          $row2 = mysqli_fetch_assoc($result2);
           $_SESSION["login"] = $_POST["login"];
           $_SESSION["password"] = $_POST["password"];
+          $_SESSION["type"] = $row2["type"];
           header('Location: ?');
           exit;
         }

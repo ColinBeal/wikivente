@@ -14,18 +14,18 @@ include("head.html");
 	<body>
 		<?php
 			include "all.php";
-		 ?>
-				<?php
-				echo "<div class='row' id='banniere'>";
-					include ("banniere.php");
+		?>
+		<?php
+			echo "<div class='row' id='banniere'>";
+				include ("banniere.php");
+			echo "</div>";
+
+			echo "<div class='row' id='centre'>";
+				echo "<div class='col-md-4' id='menu'>";
+					include ("menu.php");
 				echo "</div>";
 
-				echo "<div class='row' id='centre'>";
-					echo "<div class='col-md-4' id='menu'>";
-						include ("menu.php");
-					echo "</div>";
-
-								echo "<div class='col-md-8' id='contenu' >";
+				echo "<div class='col-md-8' id='contenu' >";
 				if (mysqli_num_rows($result) > 0)
 				{
 					echo "<form class='recherche' action='#' method='get'>";

@@ -19,6 +19,8 @@ if (!isset($_SESSION["login"]))
 	?>
 
   <?php
+
+
   echo "<div class='row' id='banniere'>";
   	include "banniere.php";
   echo "</div>";
@@ -35,26 +37,41 @@ if (!isset($_SESSION["login"]))
 
     $result = mysqli_query($conn, $sql);
 
-    mysqli_close($conn);
-
         if (mysqli_num_rows($result) > 0)
         {
-          echo "<form class='recherche' action='#' method='get'>";
-          echo "<input type='text' name='titre' value='titre'/><br/>";
-          echo "<input type='text' name='description' value='description'/><br/>";
-          echo "<input type='number' name='prix' value='prix'/><br/>";
+          echo "<form class='recherche' action='#' method='post'>";
+          echo "<p>Titre : <input type='text' name='titre' required/></p><br/>";
+          echo "<p>Description : <input type='text' name='description' required/></p><br/>";
+          echo "<p>Prix : <input type='number' name='prix' required/></p><br/>";
           while($row = mysqli_fetch_assoc($result))
           {
-            echo $row["nom"] . "<select class='custom-select' name='".$row["nom"]."'>";
+            echo $row["nom"] . "<p><select class='custom-select' name='".$row["nom"]."' required>";
             $version = explode("#", $row["options"]);
             for($i=0 ; $i < sizeof($version); $i++)
             {
               echo "<option value='" . $version[$i] . "'>" . $version[$i] . "</option>";
             }
-            echo "</select><br/>";
+            echo "</select></p><br/>";
           }
           echo "<input type='submit' name='submit'/>";
 					echo "</form>";
+
+          if (isset($_POST["submit"]) && !empty($_POST["submit"]))
+          {
+            $_POST["submit"] = null;
+            unset($_POST["submit"]);
+            $sql2 = "INSERT INTO article (titre, prix, description, version, categorie, support) VALUES ('" .$_POST["titre"]. "'," .$_POST["prix"]. ", '" .$_POST["description"]. "','" .$_POST["version"]. "','" .$_POST["categorie"]. "','" .$_POST["support"]. "')";
+            $result2 = mysqli_query($conn, $sql2);
+            if ($result2 == true)
+            {
+              echo "Article Envoyé aux Modérateurs";
+            }
+            else
+            {
+              echo "arf .. ça veut pas marcher";
+            }
+
+          }
         }
         else
         {

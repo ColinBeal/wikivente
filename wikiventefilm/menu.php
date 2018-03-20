@@ -5,17 +5,16 @@
 		$sql = "SELECT nom, lien, id FROM meta_menu";
 		$resultat = mysqli_query($conn, $sql);
 
-		if (isset($_SESSION["login"]))
+		if (isset($_SESSION["login"]) && isset($_SESSION["type"]))
 		{
-			$sql2 = "SELECT * FROM utilisateurs WHERE login='".$_SESSION['login']."' AND type='moderateur'";
-			$resultat2 = mysqli_query($conn, $sql2);
-			$num = mysqli_num_rows($resultat2);
-			$user = 1;
+			if ($_SESSION["type"] == "moderateur")
+				$user = 2;
+			else
+				$user = 1;
 		}
 		else
 		{
-			$num = null;
-			$user = null;
+			$user = 0;
 		}
 
 
@@ -27,7 +26,7 @@
         {
           while($row = mysqli_fetch_assoc($resultat))
           {
-						if($row["nom"]!="moderation" || ($row["nom"]=="moderation" && $num!=null ))
+						if($row["nom"]!="moderation" || ($row["nom"]=="moderation" && $user==2 ))
 						{
 	            echo "
 		            <li>
@@ -44,7 +43,7 @@
 
       echo " </ul>";
 
-			if ($user==1)
+			if ($user>=1)
 			{
 				echo "<input type='button' name='ajout' value='ajouter une annonce'/>";
 			}
