@@ -74,7 +74,6 @@ INSERT INTO `meta_menu` (`nom`, `lien`, `id`) VALUES
 ('Panier', 'panier.php', 5),
 ('Recherche', 'recherche.php', 6),
 ('moderation', 'moderation.php', 7);
-
 -- --------------------------------------------------------
 
 --
@@ -82,6 +81,7 @@ INSERT INTO `meta_menu` (`nom`, `lien`, `id`) VALUES
 --
 
 CREATE TABLE `recherche` (
+>>>>>>> devmich:wikiventefilm.sql
   `id` int(2) NOT NULL,
   `nom` varchar(30) NOT NULL,
   `type` varchar(10) NOT NULL,
@@ -103,6 +103,10 @@ INSERT INTO `recherche` (`id`, `nom`, `type`, `att_name`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `recherche_option`
+--
+
+
 -- Structure de la table `recherche_option`
 --
 
