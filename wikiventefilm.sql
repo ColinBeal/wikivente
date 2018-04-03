@@ -106,6 +106,10 @@ INSERT INTO `recherche` (`id`, `nom`, `type`, `att_name`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `recherche_option`
+--
+
+
 -- Structure de la table `recherche_option`
 --
 
