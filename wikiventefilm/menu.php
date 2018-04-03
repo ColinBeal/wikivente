@@ -26,7 +26,7 @@
         {
           while($row = mysqli_fetch_assoc($resultat))
           {
-						if($row["nom"]!="moderation" || ($row["nom"]=="moderation" && $user==2 ))
+						if(($row["nom"]!="moderation" AND $row["nom"]!="Ajout Annonce") || ($row["nom"]=="moderation" && $user==2 ) || ($row["nom"]=="Ajout Annonce" && $user>=1 ))
 						{
 	            echo "
 		            <li>
@@ -43,8 +43,5 @@
 
       echo " </ul>";
 
-			if ($user>=1)
-			{
-				echo "<input type='button' name='ajout' value='ajouter une annonce'/>";
-			}
+
      ?>

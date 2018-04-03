@@ -42,7 +42,6 @@ session_start();
 						{
 							if(isset($_COOKIE["panier"]))
 							{
-								$c=0;
 								$panier = $_COOKIE["panier"];
 
 								unset($_COOKIE['panier']);
@@ -50,29 +49,37 @@ session_start();
 
 								$tab = explode("|",$panier);
 
+								for ($i=0; $i < count($tab); $i++)
+								{
+									echo "<script>alert(".$tab[$i].")</script>";
+								}
+
+								$first = true;
 								for ($i=0; $i < count($tab) ; $i++)
 								{
 									if ($tab[$i] != $_POST["supprime"])
 									{
-										if ($c==0)
-										{
-											echo "creation cookie".$tab[$i]."<br/>";
-											setcookie("panier2", $tab[$i], time() + 3600, "/");
-											setcookie("panier", $tab[$i], time() + 3600, "/");
-											$c++;
-										}
-										else
-										{
-											echo "ajoue variable".$tab[$i]."<br/>";
-											setcookie("panier", $_COOKIE["panier"]."|".$tab[$i], time() + 3600, "/");
-										}
+                      if($first)
+                      {
+                        $leCookie = $tab[$i];
+												$first = false;
+                      }
+                      else
+                      {
+                        $leCookie = $leCookie."|".$tab[$i];
+                      }
+
 									}
-								}
+                }
+                setcookie("panier", $leCookie , time() + 3600, "/");
 							}
 						}
-						//header('Location: panier.php');
+						header('Location: panier.php');
 						exit;
 				}
+
+
+
 
 
 				if(isset($_POST["ajout"]))
@@ -92,8 +99,10 @@ session_start();
 						exit;
 				}
 
-				if(isset($_COOKIE["panier"]) && strlen($_COOKIE["panier"]>0))
+
+				if(isset($_COOKIE["panier"]) && strlen($_COOKIE["panier"])>0)
 				{
+
 					 	include 'connectdb.php' ;
 
 					 	$panier = $_COOKIE["panier"];
@@ -115,6 +124,7 @@ session_start();
 
 				        if (mysqli_num_rows($result) > 0)
 				        {
+									$prix = 0;
 				          while($row = mysqli_fetch_assoc($result))
 				          {
 										echo "
@@ -131,9 +141,28 @@ session_start();
 												<input type='hidden' name='supprime' value='".$row["id"]."'/>
 												<input type='submit' value='Supprimer du panier'/>
 											</form>
-										</div>
+										</div><br/><br/>
 				            ";
+										$prix += $row["prix"];
 				          }
+    							$paypal_url='https://www.sandbox.paypal.com/cgi-bin/webscr';
+    							$paypal_id='alexvig-facilitator@orange.fr';
+
+									echo "
+										<form action='".$paypal_url."' method='post' name='frmPayPal1'>
+										    <input type='hidden' name='business' value='".$paypal_id."'>
+										    <input type='hidden' name='cmd' value='_xclick'>
+										    <input type='hidden' name='item_name' value='Products Total'>
+										    <input type='hidden' name='amount' value='".$prix."'>
+										    <input type='hidden' name='no_shipping' value='1'>
+										    <input type='hidden' name='currency_code' value='EUR'>
+										    <input type='hidden' name='handling' value='0'>
+										    <input type='hidden' name='cancel_return' value='http://ufrsciencestech.u-bourgogne.fr/~av636682/wikivente-master/wikiventefilm/paiement.php'>
+										    <input type='hidden' name='return' value='http://ufrsciencestech.u-bourgogne.fr/~av636682/wikivente-master/wikiventefilm/paiement.php'>
+										    <input type='image' src='https://www.sandbox.paypal.com/en_US/i/btn/btn_buynowCC_LG.gif' border='0' name='submit' alt='PayPal - The safer, easier way to pay online!''>
+										    <img alt='' border='0' src='https://www.sandbox.paypal.com/en_US/i/scr/pixel.gif' width='1' height='1'>
+										</form>
+									";
 				        }
 				        else
 				        {
